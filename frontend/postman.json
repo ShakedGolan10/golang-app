@@ -1,0 +1,194 @@
+{
+  "info": {
+    "_postman_id": "9baf76f4-6a4c-4eb5-9d9e-39847f12f243",
+    "name": "MyBackend Postman Collection",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Register",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"name\": \"John Doe\",\n    \"email\": \"john@example.com\",\n    \"password\": \"mypassword\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/register",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "register"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Login",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"email\": \"john@example.com\",\n    \"password\": \"mypassword\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/login",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "login"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Get All Posts (Protected)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Cookie",
+            "value": "jwt={{jwt}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/protected/posts",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "protected",
+            "posts"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Create Post (Protected)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Cookie",
+            "value": "jwt={{jwt}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"title\": \"My First Post\",\n    \"body\": \"This is the content of my first post.\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/protected/posts",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "protected",
+            "posts"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Update Post (Protected)",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Cookie",
+            "value": "jwt={{jwt}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"title\": \"Updated Title\",\n    \"body\": \"Updated content for my post.\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/protected/posts/1",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "protected",
+            "posts",
+            "1"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Get All Users (Protected)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Cookie",
+            "value": "jwt={{jwt}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/protected/users",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "protected",
+            "users"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Delete User (Protected)",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Cookie",
+            "value": "jwt={{jwt}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/protected/users/1",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "protected",
+            "users",
+            "1"
+          ]
+        }
+      }
+    }
+  ]
+}

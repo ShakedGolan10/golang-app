@@ -1,0 +1,25 @@
+FROM golang:1.20 AS builder
+
+WORKDIR /app
+
+COPY go.mod go.sum ./
+RUN go mod download
+
+COPY . .
+
+WORKDIR /app/cmd/server
+RUN go build -o /app/bin/server server.go
+
+WORKDIR /app/cmd/cli
+RUN go build -o /app/bin/cli cli.go
+
+FROM alpine:latest
+
+WORKDIR /root/
+
+COPY --from=builder /app/bin/server .
+COPY --from=builder /app/bin/cli .
+
+EXPOSE 8080
+
+CMD ["./server"]

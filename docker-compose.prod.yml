@@ -1,0 +1,63 @@
+version: "3.8"
+
+services:
+  mysql_db:
+    image: mysql:9.0
+    container_name: mysql_db
+    restart: always
+    env_file:
+      - backend/.env
+    networks:
+      - backend_net
+    command: [ "mysqld", "--default-authentication-plugin=mysql_native_password", "--skip-networking=0", "--bind-address=0.0.0.0", "--skip-name-resolve" ]
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-u$$MYSQL_USER", "-p$$MYSQL_PASSWORD" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  go-backend:
+    build:
+      context: ./backend
+      dockerfile: ./dockerfile.prod
+    container_name: go_backend
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    env_file:
+      - backend/.env
+    networks:
+      - backend_net
+    depends_on:
+      mysql_db:
+        condition: service_healthy
+
+  next_frontend:
+    build:
+      context: ./frontend
+      dockerfile: ./dockerfile.prod
+    container_name: next_frontend
+    restart: unless-stopped
+    networks:
+      - backend_net
+    command: [ "sh", "-c", "npm run build" ]
+
+  nginx:
+    image: nginx:alpine
+    container_name: nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.prod.conf:/etc/nginx/nginx.conf:ro
+      - ./frontend/out:/usr/share/nginx/html
+    depends_on:
+      - next_frontend
+      - go-backend
+    networks:
+      - backend_net
+
+networks:
+  backend_net:
+    name: backend_net
+    driver: bridge
