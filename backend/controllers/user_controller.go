@@ -15,7 +15,6 @@ func GetAllUsers(c *fiber.Ctx) error {
 	if err := database.DB.Find(&users).Error; err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": err.Error()})
 	}
-	services.GenerateUsersJSON()
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{"users": users})
 }
 
@@ -38,8 +37,6 @@ func DeleteUser(c *fiber.Ctx) error {
 	if err := services.DeletePostsByUserID(uint(userID)); err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": err.Error()})
 	}
-
-	services.GenerateUsersJSON()
 
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{"message": "User deleted successfully"})
 }

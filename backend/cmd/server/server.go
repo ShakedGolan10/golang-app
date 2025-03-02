@@ -23,9 +23,6 @@ func main() {
 
 	routes.SetupRoutes(app, cfg.JWTSecret)
 
-	services.GeneratePostsJSON()
-	services.GenerateUsersJSON()
-
 	address := fmt.Sprintf(":%s", cfg.ServerPort)
 	log.Printf("Server running on port %s\n", cfg.ServerPort)
 	if err := app.Listen(address); err != nil {
