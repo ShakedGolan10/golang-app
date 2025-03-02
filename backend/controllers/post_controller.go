@@ -40,6 +40,8 @@ func CreatePost(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": err.Error()})
 	}
 
+	services.GeneratePostsJSON()
+
 	return c.Status(fiber.StatusCreated).JSON(fiber.Map{
 		"message": "Post created",
 		"post":    post,
@@ -83,6 +85,8 @@ func UpdatePost(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": err.Error()})
 	}
 
+	services.GeneratePostsJSON()
+
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{
 		"message": "Post updated",
 		"post":    post,
@@ -94,6 +98,7 @@ func GetAllPosts(c *fiber.Ctx) error {
 	if err := database.DB.Find(&posts).Error; err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": err.Error()})
 	}
+	services.GeneratePostsJSON()
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{"posts": posts})
 }
 
