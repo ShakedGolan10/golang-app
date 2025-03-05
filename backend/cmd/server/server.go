@@ -3,12 +3,9 @@ package main
 import (
 	"fmt"
 	"log"
-
 	"mybackend/config"
 	"mybackend/database"
 	"mybackend/routes"
-	"mybackend/services"
-
 	"github.com/gofiber/fiber/v2"
 )
 

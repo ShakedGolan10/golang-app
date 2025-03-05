@@ -5,6 +5,7 @@ import (
 	"mybackend/database"
 	"mybackend/models"
 	"mybackend/services"
+	
 	"time"
 
 	"github.com/go-playground/validator/v10"
@@ -119,6 +120,31 @@ func Login(c *fiber.Ctx) error {
 			"email": user.Email,
 		},
 	})
+}
+
+func Auth(c *fiber.Ctx) error {
+	userID := c.Locals("user")
+
+	var user models.User
+	result := database.DB.Where("id = ?", userID).First(&user)
+	if result.Error != nil {
+		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"error": "Couldnt find user"})
+	}
+
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{
+		"user": fiber.Map{
+			"id":    user.ID,
+			"name":  user.Name,
+			"email": user.Email,
+		},
+	})
+}
+
+func Logout(c *fiber.Ctx) error {
+    c.ClearCookie("jwt")
+    return c.Status(fiber.StatusOK).JSON(fiber.Map{
+        "message": "Logged out successfully",
+    })
 }
 
 func formatValidationError(err error) fiber.Map {

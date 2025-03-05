@@ -29,11 +29,11 @@ export default function RootLayout({
       <body className={inter.className}>
         <ReduxProvider>
           <MainLayout>
-            {/* <AuthWrapper> */}
-            <StoreLoader />
-            <SystemModal />
-            {children}
-            {/* </AuthWrapper> */}
+            <AuthWrapper>
+              <StoreLoader />
+              <SystemModal />
+              {children}
+            </AuthWrapper>
           </MainLayout>
         </ReduxProvider>
       </body>

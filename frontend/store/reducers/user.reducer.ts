@@ -1,6 +1,6 @@
 'use client'
 
-import { userService } from "@/services/user.service";
+import { authService } from "@/services/auth.service";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit"
 
 export type User = {
@@ -27,7 +27,7 @@ const initialState: IUserState = {
 
 export const checkAuth = createAsyncThunk('user/checkAuth', async (_, { rejectWithValue }) => {
   try {
-    const user = await userService.isLoggedIn();
+    const user = await authService.isLoggedIn();
     return user;
   } catch (error: any) {
     return rejectWithValue(error.message);
@@ -36,7 +36,7 @@ export const checkAuth = createAsyncThunk('user/checkAuth', async (_, { rejectWi
 
 export const login = createAsyncThunk('user/login', async (creds: Creds, { rejectWithValue }) => {
   try {
-    const user = await userService.login(creds);
+    const user = await authService.login(creds);
     return user;
   } catch (error: any) {
     return rejectWithValue(error.message);
@@ -45,7 +45,7 @@ export const login = createAsyncThunk('user/login', async (creds: Creds, { rejec
 
 export const logout = createAsyncThunk('user/logout', async (_, { rejectWithValue }) => {
   try {
-    const user = await userService.logout();
+    const user = await authService.logout();
     return user;
   } catch (error: any) {
     return rejectWithValue(error.message);
@@ -54,7 +54,7 @@ export const logout = createAsyncThunk('user/logout', async (_, { rejectWithValu
 
 export const register = createAsyncThunk('user/register', async (registedCreds: RegisterCreds, { rejectWithValue }) => {
   try {
-    const user = await userService.register(registedCreds);
+    const user = await authService.register(registedCreds);
     return user;
   } catch (error: any) {
     return rejectWithValue(error.message);
