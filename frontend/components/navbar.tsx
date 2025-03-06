@@ -8,7 +8,7 @@ export default function Navbar() {
     const router = useRouter();
     const { logoutAction } = useUserActions()
     const handleLogout = async () => {
-        await logoutAction()
+        setTimeout(logoutAction, 1000)
         router.push("/");
     };
 

@@ -6,7 +6,7 @@ import type { Metadata } from 'next'
 import AuthWrapper from '@/wrappers/auth-wrapper'
 import { ReactNode } from 'react'
 import StoreLoader from '@/components/store-loader'
-import SystemModal from '@/components/store-modal'
+import StoreModal from '@/components/store-modal'
 
 export const metadata: Metadata = {
   title: 'Apptimus home assignment',
@@ -29,7 +29,7 @@ export default function RootLayout({
           <MainLayout>
             <AuthWrapper>
               <StoreLoader />
-              <SystemModal />
+              <StoreModal />
               {children}
             </AuthWrapper>
           </MainLayout>

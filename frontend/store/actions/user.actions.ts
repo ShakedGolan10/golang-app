@@ -13,7 +13,6 @@ export const useUserActions = () => {
         try {
             toggleLoaderAction()
             await dispatch(login(creds))
-            console.log('in login action')
             openModalAction()
         } catch (error) {
             openModalAction('', true)

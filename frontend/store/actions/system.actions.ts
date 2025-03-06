@@ -7,19 +7,18 @@ import { AppDispatch } from '../store';
 export const useSystemActions = () => {
     const dispatch = useDispatch<AppDispatch>();
 
-
-    const openModalAction = (modalMsg?: string, isError?: boolean): any => {
-        dispatch(openModal({modalMsg, isError}))
+    const openModalAction = (modalMsg?: string, isError?: boolean) => {
+        dispatch(openModal({ modalMsg, isError }))
     }
 
-    const closeModalAction = (): any => {
+    const closeModalAction = () => {
         dispatch(closeModal())
     }
-    const toggleLoaderAction = (): any => {
+    const toggleLoaderAction = () => {
         dispatch(toggleLoader())
     }
-   
 
-    return { openModalAction,toggleLoaderAction, closeModalAction}
+
+    return { openModalAction, toggleLoaderAction, closeModalAction }
 }
 
