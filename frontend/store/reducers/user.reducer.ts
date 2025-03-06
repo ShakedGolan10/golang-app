@@ -115,6 +115,7 @@ export const user = createSlice({
         state.user.email = '';
         state.authChecked = true;
         state.error = action.payload as string;
+        throw new Error(action.payload)
       });
     builder.addCase(logout.fulfilled, (state) => {
       state.user.id = '';
@@ -128,6 +129,7 @@ export const user = createSlice({
         state.user.email = '';
         state.authChecked = true;
         state.error = action.payload as string;
+
       });
     builder.addCase(register.fulfilled, (state, action) => {
       if (action.payload && action.payload.id) {
@@ -147,6 +149,7 @@ export const user = createSlice({
         state.user.email = '';
         state.authChecked = true;
         state.error = action.payload as string;
+        throw new Error(action.payload)
       });
   },
 })

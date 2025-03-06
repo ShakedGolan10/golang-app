@@ -13,20 +13,22 @@ export const useUserActions = () => {
         try {
             toggleLoaderAction()
             await dispatch(login(creds))
+            console.log('in login action')
             openModalAction()
         } catch (error) {
             openModalAction('', true)
+            throw error
         } finally {
             toggleLoaderAction()
         }
     }
 
     const logoutAction = async () => {
-            toggleLoaderAction()
-            await dispatch(logout())
-            toggleLoaderAction()
+        toggleLoaderAction()
+        await dispatch(logout())
+        toggleLoaderAction()
     }
-    
+
     const registerAction = async (creds: RegisterCreds) => {
         try {
             toggleLoaderAction()
@@ -34,6 +36,7 @@ export const useUserActions = () => {
             openModalAction()
         } catch (error) {
             openModalAction('', true)
+            throw error
         } finally {
             toggleLoaderAction()
         }
@@ -42,7 +45,7 @@ export const useUserActions = () => {
     const checkAuthAction = () => {
         dispatch(checkAuth())
     }
-   
-    return { loginAction,registerAction, logoutAction, checkAuthAction}
+
+    return { loginAction, registerAction, logoutAction, checkAuthAction }
 }
 

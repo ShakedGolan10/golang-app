@@ -36,4 +36,5 @@ async function ajax<T>(
   const res: AxiosResponse<T> = await axiosInstance(config);
   console.log("res:", res)
   return res.data;
+
 }
