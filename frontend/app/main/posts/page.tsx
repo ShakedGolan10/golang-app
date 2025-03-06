@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
-import Table from "../../components/table";
 import { Post } from "@/services/post.service";
+import Table from "@/components/table";
 
 
 export default async function PostsPage() {

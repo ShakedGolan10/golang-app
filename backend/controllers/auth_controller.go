@@ -67,12 +67,9 @@ func Register(c *fiber.Ctx) error {
 	})
 
 	return c.Status(fiber.StatusCreated).JSON(fiber.Map{
-		"message": "User registered successfully",
-		"user": fiber.Map{
 			"id":    user.ID,
 			"name":  user.Name,
 			"email": user.Email,
-		},
 	})
 }
 
@@ -113,12 +110,9 @@ func Login(c *fiber.Ctx) error {
 	})
 
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{
-		"message": "Login successful",
-		"user": fiber.Map{
 			"id":    user.ID,
 			"name":  user.Name,
 			"email": user.Email,
-		},
 	})
 }
 
@@ -132,16 +126,25 @@ func Auth(c *fiber.Ctx) error {
 	}
 
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{
-		"user": fiber.Map{
 			"id":    user.ID,
 			"name":  user.Name,
 			"email": user.Email,
-		},
 	})
 }
 
 func Logout(c *fiber.Ctx) error {
-    c.ClearCookie("jwt")
+    c.Cookie(&fiber.Cookie{
+        Name:     "jwt",
+        Value:    "",
+        Expires:  time.Now().Add(-time.Hour),
+        Path:     "/",
+        Secure:   true,
+        HTTPOnly: true,
+        SameSite: "Lax",
+    })
+
+    c.Locals("user", nil)
+
     return c.Status(fiber.StatusOK).JSON(fiber.Map{
         "message": "Logged out successfully",
     })

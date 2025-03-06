@@ -5,25 +5,22 @@ import { RootState } from '../store/store';
 import Loader from '@/components/loader';
 import { useUserActions } from '@/store/actions/user.actions';
 import { useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation'
 
 export default function AuthWrapper({ children }: { children: React.ReactNode }) {
   const navigate = useRouter();
+  const path = usePathname()
   const { checkAuthAction } = useUserActions()
   const { authChecked, user } = useSelector((state: RootState) => state.userReducer);
 
   useEffect(() => {
-    checkAuthAction()
+    if (!authChecked) checkAuthAction()
   }, []);
 
   useEffect(() => {
-    if (authChecked) {
-      if (user.id) {
-        navigate.push('/main');
-      } else {
-        navigate.push('/');
-      }
-    }
-  }, [authChecked, user.id]);
+    if (authChecked && !user.id) return navigate.push('/')
+    else if (path === '/') navigate.push('/main');
+  }, [authChecked]);
 
   if (!authChecked) {
     return <Loader />;

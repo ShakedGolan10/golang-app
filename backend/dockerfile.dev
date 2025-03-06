@@ -17,3 +17,19 @@ RUN go build -o /app/build/server server.go
 EXPOSE 8080
 
 CMD ["/app/build/server"]
+
+# FROM golang:1.20
+
+# WORKDIR /app
+
+# RUN go install github.com/cosmtrek/air@v1.29.0
+
+# COPY ./backend/go.mod ./backend/go.sum ./
+
+# RUN go mod download
+
+# COPY ./backend ./
+
+# EXPOSE 8080
+
+# CMD ["air"]

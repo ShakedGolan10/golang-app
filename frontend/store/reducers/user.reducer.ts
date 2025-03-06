@@ -107,6 +107,7 @@ export const user = createSlice({
         state.user.name = '';
         state.user.email = '';
       }
+      state.authChecked = true;
     }),
       builder.addCase(login.rejected, (state, action) => {
         state.user.id = '';

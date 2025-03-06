@@ -8,18 +8,18 @@ export type Post = {
 }
 
 const getAll = async (): Promise<Post[]> => {
-  const posts = await axiosService.get<Post[]>('protected/posts');
+  const { posts } = await axiosService.get<{ posts: Post[] }>('protected/posts');
   return posts;
 };
 
-const update = async (post: Post): Promise<Post> => {
-  const updatedPost = await axiosService.put<Post>(`protected/posts/${post.id}`, post);
-  return updatedPost;
+const update = async (postToUpdate: Post): Promise<Post> => {
+  const { post } = await axiosService.put<{ post: Post }>(`protected/posts/${postToUpdate.id}`, postToUpdate);
+  return post;
 };
 
 const create = async (data: Omit<Post, 'id'>): Promise<Post> => {
-  const newPost = await axiosService.post<Post>('protected/posts', data);
-  return newPost;
+  const { post } = await axiosService.post<{ post: Post }>('protected/posts', data);
+  return post;
 };
 
 const remove = async (id: string): Promise<void> => {

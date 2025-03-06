@@ -34,5 +34,6 @@ async function ajax<T>(
     params: method === 'GET' ? query : undefined,
   };
   const res: AxiosResponse<T> = await axiosInstance(config);
+  console.log("res:", res)
   return res.data;
 }

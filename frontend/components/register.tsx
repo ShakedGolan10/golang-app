@@ -1,7 +1,7 @@
 'use client'
 import { useUserActions } from '@/store/actions/user.actions';
 import { useState, ChangeEvent, FormEvent } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation'
 
 interface FormData {
   name: string;
@@ -16,7 +16,7 @@ interface Errors {
 }
 
 export default function Register() {
-  const navigate = useNavigate();
+  const navigate = useRouter();
   const { registerAction } = useUserActions()
   const [formData, setFormData] = useState<FormData>({ name: '', email: '', password: '' });
   const [errors, setErrors] = useState<Errors>({ name: false, email: false, password: false });
@@ -49,7 +49,7 @@ export default function Register() {
     e.preventDefault();
     if (isFormInvalid) return;
     await registerAction(formData)
-    navigate('/main');
+    navigate.push('/main');
   };
 
   return (

@@ -3,12 +3,10 @@ import { ReduxProvider } from '@/store/redux-provider'
 import './globals.css'
 
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
 import AuthWrapper from '@/wrappers/auth-wrapper'
 import { ReactNode } from 'react'
 import StoreLoader from '@/components/store-loader'
 import SystemModal from '@/components/store-modal'
-const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'Apptimus home assignment',
@@ -26,7 +24,7 @@ export default function RootLayout({
 
 
     <html lang="en" className=' min-h-screen max-h-max' suppressHydrationWarning>
-      <body className={inter.className}>
+      <body>
         <ReduxProvider>
           <MainLayout>
             <AuthWrapper>

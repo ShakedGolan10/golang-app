@@ -1,6 +1,7 @@
 services:
   mysql_db:
     image: mysql:8.0
+    container_name: mysql_db
     restart: unless-stopped
     environment:
       - MYSQL_DATABASE=apptimus-db
@@ -23,6 +24,7 @@ services:
     build:
       context: .
       dockerfile: ./backend/dockerfile.dev
+    container_name: go-backend
     restart: unless-stopped
     ports:
       - "8080:8080"
@@ -32,42 +34,49 @@ services:
       - backend_net
     volumes:
       - ./frontend/public/data:/app/public/data
+      # - ./backend:/app
       # - shared_json:/app/public/data
     depends_on:
       mysql_db:
         condition: service_healthy
 
   next_frontend:
+    container_name: next_frontend
     build:
       context: ./frontend
-      dockerfile: dockerfile
+      dockerfile: dockerfile.dev
+    ports:
+      - "2000:3000"
     networks:
       - backend_net
     volumes:
+      - ./frontend:/app
+      - /app/node_modules
       - ./frontend/public/data:/app/public/data
-      - nextjs_build:/app/out
+      # - nextjs_build:/app/out
       # - shared_json:/app/public/data
 
-  nginx:
-    image: 'nginx:stable-alpine'
-    ports:
-      - "2000:2000"
-    volumes:
-      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
-      # - ./frontend/out:/usr/share/nginx/html:ro
-      - nextjs_build:/usr/share/nginx/html:ro
-    depends_on:
-      - next_frontend
-      - go-backend
-    networks:
-      - backend_net
+      # nginx:
+      #   image: 'nginx:stable-alpine'
+      #   ports:
+      #     - "2000:2000"
+      #   volumes:
+      #     - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      #     # - ./frontend/out:/usr/share/nginx/html:ro
+      #     - nextjs_build:/usr/share/nginx/html:ro
+      #   depends_on:
+      #     - next_frontend
+      #     - go-backend
+      #   networks:
+      #     - backend_net
 
 networks:
   backend_net:
     driver: bridge
 
 volumes:
-  apptimus_mysql_data: # shared_json:
-  nextjs_build:
+  apptimus_mysql_data:
+    # shared_json:
+    # nextjs_build:
 
 
