@@ -12,7 +12,8 @@ import (
 
 func GetAllUsers(c *fiber.Ctx) error {
 	var users []models.User
-	if err := database.DB.Find(&users).Error; err != nil {
+	userID := c.Locals("user")
+	if err := database.DB.Not("id = ?", userID).Find(&users).Error; err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": err.Error()})
 	}
 	services.GenerateUsersJSON()
