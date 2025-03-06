@@ -67,14 +67,22 @@ export const user = createSlice({
   initialState,
   reducers: {
     setUser(state, action: PayloadAction<{ user: User }>) {
-      state.user.id = action.payload.user.id;
-      state.user.name = action.payload.user.name;
-      state.user.email = action.payload.user.email;
+      return state = {
+        user: {
+          id: action.payload.user.id,
+          name: action.payload.user.name,
+          email: action.payload.user.email
+        }
+      }
     },
     clearUser(state) {
-      state.user.id = '';
-      state.user.name = '';
-      state.user.email = '';
+      return state = {
+        user: {
+          id: '',
+          name: '',
+          email: ''
+        }
+      }
     },
   },
   extraReducers: (builder) => {
@@ -128,7 +136,6 @@ export const user = createSlice({
         state.user.name = '';
         state.user.email = '';
         state.authChecked = true;
-        state.error = action.payload as string;
 
       });
     builder.addCase(register.fulfilled, (state, action) => {
