@@ -33,9 +33,7 @@ services:
     networks:
       - backend_net
     volumes:
-      - ./frontend/public/data:/app/public/data
-      # - ./backend:/app
-      # - shared_json:/app/public/data
+      - shared_json:/app/public/data
     depends_on:
       mysql_db:
         condition: service_healthy
@@ -50,11 +48,10 @@ services:
     networks:
       - backend_net
     volumes:
-      - ./frontend:/app
+      # - ./frontend:/app
       - /app/node_modules
-      - ./frontend/public/data:/app/public/data
+      - shared_json:/app/public/data
       # - nextjs_build:/app/out
-      # - shared_json:/app/public/data
 
       # nginx:
       #   image: 'nginx:stable-alpine'
@@ -76,7 +73,7 @@ networks:
 
 volumes:
   apptimus_mysql_data:
-    # shared_json:
+  shared_json:
     # nextjs_build:
 
 

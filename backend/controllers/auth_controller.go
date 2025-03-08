@@ -53,9 +53,12 @@ func Register(c *fiber.Ctx) error {
 	}
 
 	token, err := services.GenerateToken(cfg, user.ID)
+	
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Could not generate token"})
 	}
+	
+	services.GenerateUsersJSON()
 
 	c.Cookie(&fiber.Cookie{
 		Name:     "jwt",

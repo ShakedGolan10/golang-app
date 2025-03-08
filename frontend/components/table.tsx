@@ -79,7 +79,6 @@ const Table: React.FC<TableProps> = ({ data, dataKind, actions }) => {
     await executeAuthFunction({
       asyncOperation: () => service.remove(id),
     });
-    // remove from tableData
     setTableData((prev) => prev.filter((row) => String(row.id) !== id));
   };
 
@@ -110,7 +109,7 @@ const Table: React.FC<TableProps> = ({ data, dataKind, actions }) => {
   };
 
   return (
-    <div className="overflow-x-auto w-full relative">
+    <div className="overflow-x-auto w-[98%] relative">
       <table className="min-w-full border-collapse border border-gray-300">
         <thead>
           <tr className="bg-gray-200">
@@ -176,7 +175,6 @@ const Table: React.FC<TableProps> = ({ data, dataKind, actions }) => {
         </div>
       )}
 
-      {/* Modal for editing/creating */}
       {mode && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white p-6 rounded-lg w-96 shadow-lg relative">
