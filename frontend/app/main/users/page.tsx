@@ -5,7 +5,6 @@ import Table from "@/components/table";
 
 
 export default async function UsersPage() {
-    console.log('currdir:', process.cwd())
     const filePath = path.join(process.cwd(), "public/data/users.json");
     const jsonData = fs.readFileSync(filePath, "utf-8");
     const users: User[] = JSON.parse(jsonData);

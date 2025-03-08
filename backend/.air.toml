@@ -1,0 +1,14 @@
+root = "."
+tmp_dir = "tmp"
+
+[build]
+  bin = "./tmp/main"
+  cmd = "go build -o ./tmp/main ./cmd/server"
+
+[log]
+  color = "green"
+  level = "debug"
+
+[watcher]
+  exclude_dir = ["tmp", "vendor", "frontend", "public/data"]
+  include_ext = ["go", "tpl", "tmpl", "html", "css", "js"]

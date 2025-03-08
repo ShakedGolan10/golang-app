@@ -1,35 +1,37 @@
-FROM golang:1.20
+FROM golang:1.24-alpine
 
 WORKDIR /app
 
-COPY ./backend/go.mod .
+RUN apk update && apk add --no-cache git curl
 
-RUN go mod tidy
+RUN go install github.com/air-verse/air@latest
 
+COPY ./backend/go.mod ./backend/go.sum ./
 RUN go mod download
 
 COPY ./backend .
 
-WORKDIR /app/cmd/server
-
-RUN go build -o /app/build/server server.go
-
 EXPOSE 8080
 
-CMD ["/app/build/server"]
+CMD ["air", "-c", ".air.toml"]
+
 
 # FROM golang:1.20
 
 # WORKDIR /app
 
-# RUN go install github.com/cosmtrek/air@v1.29.0
+# COPY ./backend/go.mod .
 
-# COPY ./backend/go.mod ./backend/go.sum ./
+# RUN go mod tidy
 
 # RUN go mod download
 
-# COPY ./backend ./
+# COPY ./backend .
+
+# WORKDIR /app/cmd/server
+
+# RUN go build -o /app/build/server server.go
 
 # EXPOSE 8080
 
-# CMD ["air"]
+# CMD ["/app/build/server"]
